@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Whiteboard Chalk</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#0a0a0a}
+  #bg{position:absolute;inset:0;background:radial-gradient(70% 45% at 50% 42%,#4a2408 0%,#1a0d04 45%,#070707 80%)}
+  #grain{position:absolute;inset:0;opacity:.18;mix-blend-mode:screen}
+  svg{position:absolute;left:0;top:0}
+  #hdr{position:absolute;top:70px;width:1080px;text-align:center;font-family:'Cairo';font-weight:900;font-size:40px;color:#fff;direction:rtl}
+  #hdr span{color:#ff8a1f}
+  #hdr i{display:block;margin:6px auto 0;width:120px;height:5px;border-radius:3px;background:#ff8a1f;font-style:normal}
+  #subs{position:absolute;top:1560px;left:60px;width:960px;text-align:center;font-family:'Cairo';font-weight:900;font-size:56px;line-height:1.45;color:#fff;direction:rtl}
+  #subs .w{display:inline-block;margin:0 7px;color:rgba(255,255,255,.55)}
+  #subs .w.past{color:#fff}
+  #subs .w.on{color:#111;background:#ff8a1f;border-radius:12px;padding:0 12px}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<svg id="grain" width="1080" height="1920"><filter id="gn"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1080" height="1920" filter="url(#gn)"/></svg>
+<div id="hdr">معلومة <span>صغننة</span><i></i></div>
+
+<svg id="board" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <filter id="chalk" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="7" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="2" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.6 0 0 0 -0.55" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="0.4"/>
+    </filter>
+    <filter id="chalkText" x="-5%" y="-10%" width="110%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="4" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.4 0 0 0 -0.35" result="ga"/>
+      <feComposite in="SourceGraphic" in2="ga" operator="in"/>
+    </filter>
+  </defs>
+  <g id="scenes" fill="none" stroke-linecap="round" stroke-linejoin="round"></g>
+</svg>
+
+<svg id="handsvg" width="1080" height="1920" viewBox="0 0 1080 1920" style="pointer-events:none;display:none">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9b48f"/><stop offset="1" stop-color="#c98b65"/>
+    </linearGradient>
+    <linearGradient id="skin2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d79c77"/><stop offset="1" stop-color="#b9775a"/>
+    </linearGradient>
+    <filter id="hshadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="-18" dy="22" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
+  </defs>
+  <g id="hand" filter="url(#hshadow)">
+    <g id="handInner" transform="rotate(52)">
+      <!-- forearm -->
+      <path d="M470 -78 L1100 -95 L1100 120 L470 105 Z" fill="url(#skin2)"/>
+      <!-- palm/back of hand -->
+      <path d="M215 -70 C300 -110 440 -105 520 -70 C560 -40 565 70 525 105 C450 140 320 135 250 105 C205 80 190 -40 215 -70 Z" fill="url(#skin)"/>
+      <!-- chalk -->
+      <g>
+        <path d="M2 -9 L190 -12 L190 12 L2 9 Q-6 0 2 -9 Z" fill="#f4f1ea"/>
+        <path d="M2 4 L190 7 L190 12 L2 9 Z" fill="#d6d1c6"/>
+        <ellipse cx="2" cy="0" rx="5" ry="9" fill="#ffffff"/>
+      </g>
+      <!-- middle finger (under) -->
+      <path d="M135 20 C140 5 170 2 200 6 L320 14 C345 18 345 62 320 66 L200 64 C160 62 130 45 135 20 Z" fill="#c98b65"/>
+      <path d="M150 28 Q160 22 172 26" stroke="#a96f52" stroke-width="3" fill="none"/>
+      <!-- ring finger hint -->
+      <path d="M190 58 C200 50 240 52 300 58 L340 62 C360 70 355 105 330 108 L250 104 C205 100 182 80 190 58 Z" fill="#bf8260"/>
+      <!-- index finger (over chalk) -->
+      <path d="M95 -22 C100 -38 130 -40 160 -36 L310 -26 C340 -22 345 22 312 26 L165 22 C125 20 90 8 95 -22 Z" fill="url(#skin)"/>
+      <path d="M100 -20 C104 -30 122 -32 138 -30 L140 -6 C125 -4 104 -6 100 -20 Z" fill="#f0c6a8" opacity=".9"/>
+      <path d="M205 -30 Q212 -8 205 18" stroke="#b07656" stroke-width="3" fill="none" opacity=".7"/>
+      <!-- thumb -->
+      <path d="M120 -70 C140 -92 200 -98 250 -88 L330 -70 C350 -60 340 -28 315 -30 L215 -40 C175 -42 125 -40 120 -70 Z" fill="#dda37f"/>
+      <path d="M126 -70 C134 -82 152 -86 168 -84 L166 -60 C148 -58 130 -60 126 -70 Z" fill="#f0c6a8" opacity=".9"/>
+      <!-- knuckle shading -->
+      <path d="M300 -50 Q330 0 305 60" stroke="#b07656" stroke-width="4" fill="none" opacity=".5"/>
+    </g>
+  </g>
+</svg>
+
+<div style="position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;direction:ltr"><img id="handimg" src="hand_ext.png" style="position:absolute;left:0;top:0;transform-origin:0 0;filter:drop-shadow(-16px 22px 18px rgba(0,0,0,.6))"></div>
+<div id="subs"></div>
+
+<script>
+const SPEC = __SPEC__;
+const WORDS = SPEC.words, TOTAL = SPEC.total;
+const SVGNS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+const WHITE='#f5f1e8', OR='#ff8a1f', RED='#ff5a4a';
+// ---- icon library (local coords centred on 0,0, about +-200) ----
+const ICONS={
+ cup:[[WHITE,8,'M-160 -170 L-130 130 Q-120 170 -80 170 L80 170 Q120 170 130 130 L160 -170','M-160 -170 Q0 -130 160 -170','M-160 -170 Q0 -205 160 -170','M150 -110 Q250 -120 242 -30 Q232 55 128 62','M-220 190 Q0 245 220 190'],[OR,7,'M-60 -210 Q-88 -258 -60 -298 Q-32 -338 -60 -385','M20 -218 Q-8 -266 20 -306 Q48 -346 20 -393','M100 -210 Q72 -258 100 -298 Q128 -338 100 -385']],
+ stomach:[[WHITE,8,'M-50 -190 Q-30 -140 -70 -100 Q-170 -10 -120 110 Q-60 210 70 180 Q190 150 165 40 Q140 -50 40 -50 Q-15 -50 -10 -110 L-10 -190','M70 180 Q90 220 140 230']],
+ fire:[[OR,8,'M0 170 Q-120 140 -100 30 Q-90 -40 -35 -85 Q-45 -20 0 0 Q-15 -100 45 -175 Q65 -65 120 0 Q155 130 0 170']],
+ food:[[WHITE,8,'M-180 40 L180 40 Q170 160 0 170 Q-170 160 -180 40','M-120 40 Q-100 -40 -40 -20 Q0 -90 60 -40 Q120 -60 130 40'],[OR,6,'M-60 0 L-60 -10','M20 -10 L20 -20']],
+ bean:[[WHITE,8,'M0 -170 C130 -170 150 170 0 170 C-150 170 -130 -170 0 -170'],[OR,7,'M0 -150 C-60 -60 60 60 0 150']],
+ capsule:[[WHITE,8,'M-170 -45 L170 -45 A45 45 0 0 1 170 45 L-170 45 A45 45 0 0 1 -170 -45','M0 -45 L0 45'],[OR,7,'M-150 -20 L-40 -20']],
+ heart:[[RED,9,'M0 150 C-160 50 -200 -20 -200 -80 C-200 -150 -140 -190 -90 -190 C-50 -190 -15 -165 0 -130 C15 -165 50 -190 90 -190 C140 -190 200 -150 200 -80 C200 -20 160 50 0 150']],
+ pulse:[[OR,8,'M-230 0 L-90 0 L-60 -90 L-15 100 L20 -50 L45 0 L230 0']],
+ clock:[[WHITE,8,'M0 -150 A150 150 0 1 1 -0.1 -150','M0 -135 L0 -110','M135 0 L110 0','M0 135 L0 110','M-135 0 L-110 0','M0 0 L0 -95','M0 0 L70 40']],
+ moon:[[WHITE,8,'M40 -140 A140 140 0 1 0 40 140 A110 110 0 1 1 40 -140']],
+ sun:[[OR,8,'M0 -90 A90 90 0 1 1 -0.1 -90','M0 -130 L0 -165','M0 130 L0 165','M-130 0 L-165 0','M130 0 L165 0','M-92 -92 L-117 -117','M92 -92 L117 -117','M-92 92 L-117 117','M92 92 L117 117']],
+ bed:[[WHITE,8,'M-210 70 L210 70','M-210 -60 L-210 140','M210 10 L210 140','M-170 30 Q-150 -30 -95 -10 Q-60 15 -60 40','M-40 -20 L170 -20 Q200 -20 200 20 L200 70'],[OR,6,'M80 -120 L130 -120 L80 -70 L130 -70','M150 -190 L185 -190 L150 -155 L185 -155']],
+ drop:[[WHITE,8,'M0 -180 Q120 -20 110 60 Q100 170 0 170 Q-100 170 -110 60 Q-120 -20 0 -180'],[OR,6,'M-50 60 Q-45 110 0 120']],
+ check:[[OR,12,'M-130 0 L-35 95 L150 -120']],
+ cross:[[RED,12,'M-120 -120 L120 120','M120 -120 L-120 120']],
+ warn:[[RED,10,'M0 -180 L190 150 L-190 150 Z','M0 -70 L0 50'],[RED,14,'M0 100 L0 104']],
+ question:[[OR,10,'M-80 -100 Q-80 -185 0 -185 Q90 -185 90 -105 Q90 -50 25 -20 Q0 -5 0 45'],[OR,14,'M0 110 L0 114']],
+ tea:[[WHITE,8,'M-140 -100 L-120 150 Q-115 175 -85 175 L85 175 Q115 175 120 150 L140 -100 Z','M135 -60 Q215 -60 205 20 Q195 90 120 90'],[OR,6,'M-30 -100 L-30 -170','M-60 -170 L0 -170 L0 -220 L-60 -220 Z']],
+ can:[[WHITE,8,'M-90 -170 L90 -170 L100 -150 L100 160 L90 180 L-90 180 L-100 160 L-100 -150 Z','M-100 -120 L100 -120','M-100 130 L100 130'],[OR,9,'M30 -80 L-20 10 L20 10 L-30 90']],
+ person:[[WHITE,8,'M0 -170 A55 55 0 1 1 -0.1 -170','M0 -60 L0 90','M-90 -20 L0 -40 L90 -20','M0 90 L-60 190','M0 90 L60 190']],
+ bulb:[[WHITE,9,'M-70 60 A120 120 0 1 1 70 60 Q50 100 50 140 L-50 140 Q-50 100 -70 60','M-45 175 L45 175','M-35 205 L35 205'],[OR,7,'M0 -180 L0 -220','M-140 -140 L-168 -162','M140 -140 L168 -162','M-170 -20 L-205 -20','M170 -20 L205 -20']],
+};
+const root=document.createElementNS(SVGNS,'g'); $('scenes').appendChild(root);
+const acts=[]; const SC=[];
+function addDraw(g,icon,cx,cy,s){
+  const it={k:'draw',paths:[],cx,cy,s};
+  const grp=document.createElementNS(SVGNS,'g'); grp.setAttribute('transform',`translate(${cx} ${cy}) scale(${s})`); g.appendChild(grp);
+  const inner=document.createElementNS(SVGNS,'g'); inner.setAttribute('filter','url(#chalk)'); grp.appendChild(inner);
+  ICONS[icon].forEach(([c,w,...ds])=>ds.forEach(d=>{const p=document.createElementNS(SVGNS,'path');p.setAttribute('d',d);p.setAttribute('stroke',c);p.setAttribute('stroke-width',w/s*0.9+ (s<1?1:0));inner.appendChild(p);const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;it.paths.push({p,L});}));
+  it.total=it.paths.reduce((a,b)=>a+b.L,0); return it;
+}
+function addWrite(g,t,x,y,size,c,id){
+  const cp=document.createElementNS(SVGNS,'clipPath'); cp.setAttribute('id',id); const r=document.createElementNS(SVGNS,'rect'); cp.appendChild(r); g.appendChild(cp);
+  const tx=document.createElementNS(SVGNS,'text');
+  tx.setAttribute('x',x);tx.setAttribute('y',y);tx.setAttribute('text-anchor','middle');tx.setAttribute('direction','rtl');
+  tx.setAttribute('font-family','Marhey');tx.setAttribute('font-weight','700');tx.setAttribute('font-size',size);
+  tx.setAttribute('fill',c);tx.setAttribute('stroke','none');tx.setAttribute('clip-path',`url(#${id})`);tx.setAttribute('filter','url(#chalkText)');
+  tx.textContent=t; g.appendChild(tx); return {k:'write',tx,r,len:t.length};
+}
+SPEC.scenes.forEach((sc,si)=>{
+  const g=document.createElementNS(SVGNS,'g'); root.appendChild(g);
+  const start=sc.at, end=(si+1<SPEC.scenes.length?SPEC.scenes[si+1].at:TOTAL+1);
+  const S={el:g,start,end}; SC.push(S);
+  const icons=sc.icons||[], lines=sc.lines||[];
+  const items=[];
+  const pos = icons.length===1?[[540,640,1]]:icons.length===2?[[760,640,.72],[320,640,.72]]:icons.length===3?[[810,640,.55],[540,640,.55],[270,640,.55]]:[];
+  icons.forEach((ic,i)=>items.push(addDraw(g,ic,...pos[i])));
+  const y0 = icons.length? 1060 : 620, gap = lines.length>3?110:125;
+  lines.forEach((ln,i)=>{const size=ln.size||(ln.t.length>14?78:96); items.push(addWrite(g,ln.t,540,y0+i*gap,size,ln.c==='o'?OR:(ln.c==='r'?RED:WHITE),'c'+si+'_'+i));});
+  // timing: sequential within [start+0.05, end-0.3]
+  const t0=start+0.05, t1=Math.max(t0+0.5,end-0.3), D=t1-t0;
+  const weights=items.map(it=>it.k==='draw'?1.1:0.35+0.045*it.len);
+  const W=weights.reduce((a,b)=>a+b,0); const scale=Math.min(1.25, D/W);
+  let t=t0; items.forEach((it,i)=>{ it.start=t; it.end=t+weights[i]*scale; t=it.end; acts.push(it); });
+});
+function measure(){ acts.filter(a=>a.k==='write').forEach(a=>{a.bb=a.tx.getBBox();}); }
+function tipFor(a,p){
+  if(a.k==='draw'){ let target=a.total*p;
+    for(const {p:pe,L} of a.paths){ if(target<=L){const pt=pe.getPointAtLength(Math.max(0,target)); return [a.cx+a.s*pt.x,a.cy+a.s*pt.y];} target-=L; }
+    const l=a.paths[a.paths.length-1]; const pt=l.p.getPointAtLength(l.L); return [a.cx+a.s*pt.x,a.cy+a.s*pt.y]; }
+  const b=a.bb; return [b.x+b.width*(1-p), b.y+b.height*0.55+Math.sin(p*40)*b.height*0.18];
+}
+const REST=[-250,2350]; const HS=1.45, TIP=[1862,34];
+function render(t){
+  SC.forEach(sc=>{ let op=1,tx=0;
+    if(t<sc.start||t>sc.end+0.35) op=0; else if(t>sc.end){const q=ease(clamp((t-sc.end)/0.35)); tx=-q*1100; op=1-q*0.3;}
+    sc.el.style.opacity=op; sc.el.setAttribute('transform',`translate(${tx} 0)`); });
+  let target=null;
+  acts.forEach(a=>{ const p=clamp((t-a.start)/(a.end-a.start));
+    if(a.k==='draw'){ let rem=a.total*ease(p); a.paths.forEach(({p:pe,L})=>{const s=Math.min(rem,L); pe.style.strokeDashoffset=L-s; rem-=s;}); }
+    else { const b=a.bb, w=b.width*p; a.r.setAttribute('x',b.x+b.width-w-6); a.r.setAttribute('y',b.y-30); a.r.setAttribute('width',p>0?w+12:0); a.r.setAttribute('height',b.height+60); }
+    if(t>=a.start&&t<=a.end) target=tipFor(a,a.k==='draw'?ease(p):p); });
+  if(!target){
+    const next=acts.filter(a=>a.start>t).sort((x,y)=>x.start-y.start)[0];
+    const prev=acts.filter(a=>a.end<=t).sort((x,y)=>y.end-x.end)[0];
+    if(next&&prev&&next.start-prev.end<1.2){const q=ease(clamp((t-prev.end)/(next.start-prev.end)));const a0=tipFor(prev,1),a1=tipFor(next,0);target=[a0[0]+(a1[0]-a0[0])*q,a0[1]+(a1[1]-a0[1])*q-Math.sin(q*Math.PI)*60];}
+    else if(prev&&next){const s=t-prev.end,e=next.start-t,a0=tipFor(prev,1),a1=tipFor(next,0);
+      if(s<0.5){const q=ease(s/0.5);target=[a0[0]+(REST[0]-a0[0])*q,a0[1]+(REST[1]-a0[1])*q];}
+      else if(e<0.5){const q=ease(1-e/0.5);target=[REST[0]+(a1[0]-REST[0])*q,REST[1]+(a1[1]-REST[1])*q];} else target=REST;}
+    else if(next){const a1=tipFor(next,0);const q=ease(clamp(1-(next.start-t)/0.6));target=[REST[0]+(a1[0]-REST[0])*q,REST[1]+(a1[1]-REST[1])*q];}
+    else if(prev){const a0=tipFor(prev,1);const q=ease(clamp((t-prev.end)/0.6));target=[a0[0]+(REST[0]-a0[0])*q,a0[1]+(REST[1]-a0[1])*q];}
+    else target=REST;
+  }
+  $('handimg').style.transform=`translate(${target[0]-TIP[0]*HS}px,${target[1]-TIP[1]*HS}px) scale(${HS})`;
+  renderSubs(t);
+}
+const chunks=[];(function(){let cur=[];WORDS.forEach(w=>{cur.push(w);if(/[،.؟?!:…]$/.test(w.text.replace(/\.\.\.$/,'…'))||cur.length>=3){chunks.push(cur);cur=[];}});if(cur.length)chunks.push(cur);})();
+const clean=t=>t.replace(/\.\.\./g,'').replace(/[،.:]$/,'');
+let lastC=-1;
+function renderSubs(t){ let idx=-1; chunks.forEach((c,i)=>{if(t>=c[0].start-0.05)idx=i;});
+  const el=$('subs'); const lastEnd=chunks[chunks.length-1].slice(-1)[0].end;
+  if(idx<0||t>lastEnd+0.5){el.innerHTML='';lastC=-1;return;}
+  if(idx!==lastC){el.innerHTML=chunks[idx].map(w=>'<span class="w">'+clean(w.text)+'</span>').join('');lastC=idx;}
+  const ws=el.querySelectorAll('.w'); chunks[idx].forEach((w,j)=>{ws[j].className='w'+(t>=w.start&&t<w.end+0.06?' on':(t>=w.end?' past':''));}); }
+window.ready=document.fonts.ready.then(()=>{measure();render(0);});
+window.render=render;
+</script>
+</body>
+</html>
