@@ -30,3 +30,7 @@ Done with VO: V4 gen OJSrezsiS1oZYQxmoFbG (19.5s) · V5 NG9NVcoaR2tKAntJ82Da (20
 | 6 | 2026-12-03 | 969a67a1-ddde-4fd4-9378-0f9952269ccc | 0ddc1e46 | b06ab362-ce05-45ac-8492-91701b03a628 |
 | 7 | 2026-12-04 | ecadb9b4-bff9-41c2-8771-7b4567977983 | 7ac90a89 | 5f48f5ed-c372-4303-b2d4-d29eda38865b |
 Status: drafts only — awaiting user approval before vidiq_social_post_publish.
+
+## Publish log
+- 2026-11-28 07:40 UTC: user approved. Published (scheduled) 1 https://www.youtube.com/watch?v=6yk7tII0OVw · 2 https://www.youtube.com/watch?v=7mV63w8cL6o · 3 https://www.youtube.com/watch?v=HDYGlNXIAzM
+- vidIQ free plan: 3 YouTube uploads/day (resets 08:00 UTC). 4-6 queued for 2026-11-28 08:05 UTC, 7 for 2026-11-29 08:05 UTC (send_later reminders).
