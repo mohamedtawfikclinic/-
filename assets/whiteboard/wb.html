@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Whiteboard Chalk</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#0a0a0a}
+  #bg{position:absolute;inset:0;background:radial-gradient(70% 45% at 50% 42%,#4a2408 0%,#1a0d04 45%,#070707 80%)}
+  #grain{position:absolute;inset:0;opacity:.18;mix-blend-mode:screen}
+  svg{position:absolute;left:0;top:0}
+  #hdr{position:absolute;top:70px;width:1080px;text-align:center;font-family:'Cairo';font-weight:900;font-size:40px;color:#fff;direction:rtl}
+  #hdr span{color:#ff8a1f}
+  #hdr i{display:block;margin:6px auto 0;width:120px;height:5px;border-radius:3px;background:#ff8a1f;font-style:normal}
+  #subs{position:absolute;top:1560px;left:60px;width:960px;text-align:center;font-family:'Cairo';font-weight:900;font-size:56px;line-height:1.45;color:#fff;direction:rtl}
+  #subs .w{display:inline-block;margin:0 7px;color:rgba(255,255,255,.55)}
+  #subs .w.past{color:#fff}
+  #subs .w.on{color:#111;background:#ff8a1f;border-radius:12px;padding:0 12px}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<svg id="grain" width="1080" height="1920"><filter id="gn"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1080" height="1920" filter="url(#gn)"/></svg>
+<div id="hdr">معلومة <span>صغننة</span><i></i></div>
+
+<svg id="board" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <filter id="chalk" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="7" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="2" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.6 0 0 0 -0.55" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="0.4"/>
+    </filter>
+    <filter id="chalkText" x="-5%" y="-10%" width="110%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="4" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.4 0 0 0 -0.35" result="ga"/>
+      <feComposite in="SourceGraphic" in2="ga" operator="in"/>
+    </filter>
+  </defs>
+  <g id="scenes" fill="none" stroke-linecap="round" stroke-linejoin="round"></g>
+</svg>
+
+<svg id="handsvg" width="1080" height="1920" viewBox="0 0 1080 1920" style="pointer-events:none;display:none">
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9b48f"/><stop offset="1" stop-color="#c98b65"/>
+    </linearGradient>
+    <linearGradient id="skin2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d79c77"/><stop offset="1" stop-color="#b9775a"/>
+    </linearGradient>
+    <filter id="hshadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="-18" dy="22" stdDeviation="14" flood-color="#000" flood-opacity=".55"/></filter>
+  </defs>
+  <g id="hand" filter="url(#hshadow)">
+    <g id="handInner" transform="rotate(52)">
+      <!-- forearm -->
+      <path d="M470 -78 L1100 -95 L1100 120 L470 105 Z" fill="url(#skin2)"/>
+      <!-- palm/back of hand -->
+      <path d="M215 -70 C300 -110 440 -105 520 -70 C560 -40 565 70 525 105 C450 140 320 135 250 105 C205 80 190 -40 215 -70 Z" fill="url(#skin)"/>
+      <!-- chalk -->
+      <g>
+        <path d="M2 -9 L190 -12 L190 12 L2 9 Q-6 0 2 -9 Z" fill="#f4f1ea"/>
+        <path d="M2 4 L190 7 L190 12 L2 9 Z" fill="#d6d1c6"/>
+        <ellipse cx="2" cy="0" rx="5" ry="9" fill="#ffffff"/>
+      </g>
+      <!-- middle finger (under) -->
+      <path d="M135 20 C140 5 170 2 200 6 L320 14 C345 18 345 62 320 66 L200 64 C160 62 130 45 135 20 Z" fill="#c98b65"/>
+      <path d="M150 28 Q160 22 172 26" stroke="#a96f52" stroke-width="3" fill="none"/>
+      <!-- ring finger hint -->
+      <path d="M190 58 C200 50 240 52 300 58 L340 62 C360 70 355 105 330 108 L250 104 C205 100 182 80 190 58 Z" fill="#bf8260"/>
+      <!-- index finger (over chalk) -->
+      <path d="M95 -22 C100 -38 130 -40 160 -36 L310 -26 C340 -22 345 22 312 26 L165 22 C125 20 90 8 95 -22 Z" fill="url(#skin)"/>
+      <path d="M100 -20 C104 -30 122 -32 138 -30 L140 -6 C125 -4 104 -6 100 -20 Z" fill="#f0c6a8" opacity=".9"/>
+      <path d="M205 -30 Q212 -8 205 18" stroke="#b07656" stroke-width="3" fill="none" opacity=".7"/>
+      <!-- thumb -->
+      <path d="M120 -70 C140 -92 200 -98 250 -88 L330 -70 C350 -60 340 -28 315 -30 L215 -40 C175 -42 125 -40 120 -70 Z" fill="#dda37f"/>
+      <path d="M126 -70 C134 -82 152 -86 168 -84 L166 -60 C148 -58 130 -60 126 -70 Z" fill="#f0c6a8" opacity=".9"/>
+      <!-- knuckle shading -->
+      <path d="M300 -50 Q330 0 305 60" stroke="#b07656" stroke-width="4" fill="none" opacity=".5"/>
+    </g>
+  </g>
+</svg>
+
+<div style="position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;direction:ltr"><img id="handimg" src="hand_ext.png" style="position:absolute;left:0;top:0;transform-origin:0 0;filter:drop-shadow(-16px 22px 18px rgba(0,0,0,.6))"></div>
+<div id="subs"></div>
+
+<script>
+const WORDS = __WORDS__;
+const TOTAL = __TOTAL__;
+const SVGNS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+const W=i=>WORDS[Math.min(i,WORDS.length-1)].start;
+
+const WHITE='#f5f1e8', OR='#ff8a1f';
+// ---------- scene definitions ----------
+// each scene: {start, end, items:[...]}; item kinds: draw (paths), write (text), fill (hatch inside clip path)
+const SCENES = [
+ { start:0, end:2.37, items:[
+   {k:'draw', at:0.0, dur:0.95, w:8, c:WHITE, d:[
+     'M380 560 L410 860 Q420 900 460 900 L620 900 Q660 900 670 860 L700 560',
+     'M380 560 Q540 600 700 560','M380 560 Q540 525 700 560',
+     'M690 620 Q790 610 782 700 Q772 785 668 792',
+     'M320 920 Q540 975 760 920']},
+   {k:'draw', at:0.95, dur:0.35, w:7, c:OR, d:[
+     'M480 520 Q452 472 480 432 Q508 392 480 345','M560 512 Q532 464 560 424 Q588 384 560 337','M640 520 Q612 472 640 432 Q668 392 640 345']},
+   {k:'write', at:1.3, dur:0.5, x:540, y:1110, size:96, c:WHITE, t:'القهوة بتفضل'},
+   {k:'write', at:1.8, dur:0.5, x:540, y:1240, size:96, c:OR, t:'في جسمك قد إيه؟'},
+ ]},
+ { start:2.37, end:7.37, items:[
+   {k:'draw', at:2.5, dur:0.7, w:8, c:WHITE, d:[
+     'M300 420 A140 140 0 1 1 299.9 420','M300 435 L300 460','M440 560 L415 560','M300 700 L300 675','M160 560 L185 560',
+     'M300 560 L300 470','M300 560 L370 600']},
+   {k:'write', at:3.2, dur:0.5, x:750, y:560, size:110, c:OR, t:'٣٠ - ٦٠'},
+   {k:'write', at:3.7, dur:0.35, x:750, y:680, size:70, c:WHITE, t:'دقيقة'},
+   {k:'draw', at:4.1, dur:0.4, w:7, c:WHITE, d:['M170 900 L170 1290 L920 1290']},
+   {k:'draw', at:4.5, dur:0.8, w:9, c:OR, d:['M175 1280 C330 1280 380 980 480 980 C580 980 660 1190 910 1230']},
+   {k:'dot', at:5.6, dur:0.25, x:480, y:980, r:18, c:OR},
+   {k:'write', at:5.85, dur:0.9, x:700, y:930, size:62, c:WHITE, t:'أعلى مستوى في الدم'},
+ ]},
+ { start:7.37, end:10.85, items:[
+   {k:'write', at:7.5, dur:0.8, x:540, y:420, size:110, c:WHITE, t:'بعد ٥ ساعات'},
+   {k:'draw', at:8.3, dur:0.7, w:8, c:WHITE, d:['M370 560 L410 1050 Q420 1090 470 1090 L610 1090 Q660 1090 670 1050 L710 560','M370 560 L710 560']},
+   {k:'draw', at:9.0, dur:0.2, w:5, c:WHITE, d:['M385 830 L695 830']},
+   {k:'fill', at:9.2, dur:0.7, c:OR, clip:'M370 560 L410 1050 Q420 1090 470 1090 L610 1090 Q660 1090 670 1050 L710 560 Z', box:[380,830,700,1090], gap:26},
+   {k:'write', at:9.9, dur:0.7, x:540, y:1260, size:96, c:OR, t:'لسه نصه موجود!'},
+ ]},
+ { start:10.85, end:15.37, items:[
+   {k:'draw', at:11.0, dur:0.7, w:8, c:OR, d:['M810 570 A80 80 0 1 1 809.9 570',
+     'M810 535 L810 505','M810 765 L810 795','M695 650 L665 650','M925 650 L955 650','M730 570 L708 548','M890 570 L912 548','M730 730 L708 752','M890 730 L912 752']},
+   {k:'write', at:11.7, dur:0.5, x:810, y:880, size:70, c:WHITE, t:'٥ العصر'},
+   {k:'draw', at:12.2, dur:0.4, w:7, c:WHITE, d:['M680 640 Q540 540 400 640','M430 600 L398 642 L448 650']},
+   {k:'draw', at:12.6, dur:0.6, w:8, c:WHITE, d:['M430 1180 Q540 1090 650 1180 Q540 1270 430 1180','M540 1145 A35 35 0 1 1 539.9 1145']},
+   {k:'write', at:13.2, dur:0.6, x:540, y:1380, size:80, c:OR, t:'لسه صاحي معاك!'},
+   {k:'draw', at:13.9, dur:0.5, w:8, c:WHITE, d:['M300 565 A95 95 0 1 0 300 735 A75 75 0 1 1 300 565']},
+   {k:'write', at:14.4, dur:0.5, x:270, y:880, size:70, c:OR, t:'١٠ بالليل'},
+ ]},
+ { start:15.37, end:TOTAL+1, items:[
+   {k:'draw', at:15.4, dur:0.8, w:9, c:WHITE, d:['M470 760 A120 120 0 1 1 610 760 Q590 800 590 840 L490 840 Q490 800 470 760','M495 875 L585 875','M505 905 L575 905']},
+   {k:'write', at:16.2, dur:0.4, x:540, y:1060, size:90, c:WHITE, t:'تابع'},
+   {k:'write', at:16.6, dur:0.8, x:540, y:1200, size:120, c:OR, t:'معلومة صغننة'},
+   {k:'fill', at:17.4, dur:0.5, c:OR, clip:'M470 760 A120 120 0 1 1 610 760 Q590 800 590 840 L490 840 Q490 800 470 760 Z', box:[420,560,660,840], gap:24},
+   {k:'draw', at:17.9, dur:0.4, w:7, c:OR, d:['M540 520 L540 480','M400 560 L372 538','M680 560 L708 538','M370 680 L335 680','M710 680 L745 680']},
+ ]},
+];
+
+// ---------- build DOM ----------
+const root=$('scenes');
+const acts=[]; // all actions with geometry for the hand
+SCENES.forEach((sc,si)=>{
+  const g=document.createElementNS(SVGNS,'g'); g.setAttribute('id','sc'+si); root.appendChild(g); sc.el=g;
+  sc.items.forEach((it,ii)=>{
+    if(it.k==='draw'){
+      const grp=document.createElementNS(SVGNS,'g'); grp.setAttribute('filter','url(#chalk)'); g.appendChild(grp);
+      it.paths=it.d.map(d=>{const p=document.createElementNS(SVGNS,'path');p.setAttribute('d',d);p.setAttribute('stroke',it.c);p.setAttribute('stroke-width',it.w);grp.appendChild(p);const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;return {p,L};});
+      it.total=it.paths.reduce((a,b)=>a+b.L,0);
+    } else if(it.k==='write'){
+      const id='cl'+si+'_'+ii;
+      const cp=document.createElementNS(SVGNS,'clipPath'); cp.setAttribute('id',id);
+      const r=document.createElementNS(SVGNS,'rect'); cp.appendChild(r); g.appendChild(cp);
+      const tx=document.createElementNS(SVGNS,'text');
+      tx.setAttribute('x',it.x);tx.setAttribute('y',it.y);tx.setAttribute('text-anchor','middle');tx.setAttribute('direction','rtl');
+      tx.setAttribute('font-family','Marhey');tx.setAttribute('font-weight','700');tx.setAttribute('font-size',it.size);
+      tx.setAttribute('fill',it.c);tx.setAttribute('stroke','none');tx.setAttribute('clip-path',`url(#${id})`);tx.setAttribute('filter','url(#chalkText)');
+      tx.textContent=it.t; g.appendChild(tx); it.tx=tx; it.r=r;
+    } else if(it.k==='fill'){
+      const id='fc'+si+'_'+ii;
+      const cp=document.createElementNS(SVGNS,'clipPath'); cp.setAttribute('id',id);
+      const cpp=document.createElementNS(SVGNS,'path'); cpp.setAttribute('d',it.clip); cp.appendChild(cpp); g.appendChild(cp);
+      const [x0,y0,x1,y1]=it.box; let d='M'+x0+' '+y1; let up=true;
+      for(let x=x0;x<=x1+it.gap;x+=it.gap){ d+=` L${x+it.gap/2} ${up?y0:y1}`; up=!up; }
+      const grp=document.createElementNS(SVGNS,'g'); grp.setAttribute('clip-path',`url(#${id})`); g.appendChild(grp);
+      const inner=document.createElementNS(SVGNS,'g'); inner.setAttribute('filter','url(#chalk)'); grp.appendChild(inner);
+      const p=document.createElementNS(SVGNS,'path'); p.setAttribute('d',d); p.setAttribute('stroke',it.c); p.setAttribute('stroke-width',it.gap*2.3); p.setAttribute('opacity','.9'); inner.appendChild(p);
+      const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=L; it.paths=[{p,L}]; it.total=L;
+    } else if(it.k==='dot'){
+      const c=document.createElementNS(SVGNS,'circle'); c.setAttribute('cx',it.x);c.setAttribute('cy',it.y);c.setAttribute('r',it.r);c.setAttribute('fill',it.c);c.setAttribute('filter','url(#chalk)');g.appendChild(c); it.el=c;
+    }
+    it.start=it.at; it.end=it.at+(it.dur||0.3); acts.push(it);
+  });
+});
+// measure text boxes after fonts load
+function measure(){
+  acts.filter(a=>a.k==='write').forEach(a=>{const b=a.tx.getBBox(); a.bb=b;});
+}
+
+function tipFor(a,p){
+  if(a.k==='draw'||a.k==='fill'){
+    let target=a.total*p;
+    for(const {p:pe,L} of a.paths){ if(target<=L){const pt=pe.getPointAtLength(Math.max(0,target)); return [pt.x,pt.y];} target-=L; }
+    const last=a.paths[a.paths.length-1]; const pt=last.p.getPointAtLength(last.L); return [pt.x,pt.y];
+  }
+  if(a.k==='write'){ const b=a.bb; const x=b.x+b.width*(1-p); const y=b.y+b.height*0.55+Math.sin(p*40)*b.height*0.18; return [x,y]; }
+  if(a.k==='dot') return [a.x,a.y];
+}
+
+const REST=[-250,2350]; const HS=1.45, TIP=[1862,34];
+let handPos=[...REST];
+function render(t){
+  // scenes visibility + transition (slide out to the right like turning a page)
+  SCENES.forEach(sc=>{
+    let op=1, tx=0;
+    if(t<sc.start||t>sc.end+0.35){op=0;}
+    else if(t>sc.end){const q=ease(clamp((t-sc.end)/0.35)); tx=-q*1100; op=1-q*0.3;}
+    sc.el.style.opacity=op; sc.el.setAttribute('transform',`translate(${tx} 0)`);
+  });
+  let active=null, target=null;
+  acts.forEach(a=>{
+    const p=clamp((t-a.start)/(a.end-a.start));
+    if(a.k==='draw'||a.k==='fill'){
+      let rem=a.total*ease(p);
+      a.paths.forEach(({p:pe,L})=>{const s=Math.min(rem,L); pe.style.strokeDashoffset=L-s; rem-=s;});
+    } else if(a.k==='write'){
+      const b=a.bb; const w=b.width*p; a.r.setAttribute('x',b.x+b.width-w-6); a.r.setAttribute('y',b.y-30); a.r.setAttribute('width',p>0?w+12:0); a.r.setAttribute('height',b.height+60);
+    } else if(a.k==='dot'){ a.el.setAttribute('r',a.r*ease(p)); }
+    if(t>=a.start&&t<=a.end) { active=a; target=tipFor(a,a.k==='draw'||a.k==='fill'?ease(p):p); }
+  });
+  // hand: if active -> at tip; else glide toward next action start point or rest
+  if(!target){
+    const next=acts.filter(a=>a.start>t).sort((x,y)=>x.start-y.start)[0];
+    const prev=acts.filter(a=>a.end<=t).sort((x,y)=>y.end-x.end)[0];
+    if(next && prev && next.start-prev.end<1.2){
+      const q=ease(clamp((t-prev.end)/(next.start-prev.end)));
+      const a0=tipFor(prev,1), a1=tipFor(next,0);
+      target=[a0[0]+(a1[0]-a0[0])*q, a0[1]+(a1[1]-a0[1])*q - Math.sin(q*Math.PI)*60];
+    } else if(prev && next){
+      const gap=next.start-prev.end, s=t-prev.end, e=next.start-t;
+      const a0=tipFor(prev,1), a1=tipFor(next,0);
+      if(s<0.5){const q=ease(s/0.5); target=[a0[0]+(REST[0]-a0[0])*q, a0[1]+(REST[1]-a0[1])*q];}
+      else if(e<0.5){const q=ease(1-e/0.5); target=[REST[0]+(a1[0]-REST[0])*q, REST[1]+(a1[1]-REST[1])*q];}
+      else target=REST;
+    } else if(next){ const e=next.start-t; const a1=tipFor(next,0); const q=ease(clamp(1-e/0.6)); target=[REST[0]+(a1[0]-REST[0])*q, REST[1]+(a1[1]-REST[1])*q]; }
+    else if(prev){ const a0=tipFor(prev,1); const q=ease(clamp((t-prev.end)/0.6)); target=[a0[0]+(REST[0]-a0[0])*q, a0[1]+(REST[1]-a0[1])*q]; }
+    else target=REST;
+  }
+  const hi=$('handimg'); hi.style.transform=`translate(${target[0]-TIP[0]*HS}px,${target[1]-TIP[1]*HS}px) scale(${HS})`;
+  // subtitles
+  renderSubs(t);
+}
+const chunks=[];(function(){let cur=[];WORDS.forEach(w=>{cur.push(w);if(/[،.؟?!:…]$/.test(w.text.replace(/\.\.\.$/,'…'))||cur.length>=3){chunks.push(cur);cur=[];}});if(cur.length)chunks.push(cur);})();
+const clean=t=>t.replace(/\.\.\./g,'').replace(/[،.:]$/,'');
+let lastC=-1;
+function renderSubs(t){
+  let idx=-1; chunks.forEach((c,i)=>{if(t>=c[0].start-0.05)idx=i;});
+  const el=$('subs'); const lastEnd=chunks[chunks.length-1].slice(-1)[0].end;
+  if(idx<0||t>lastEnd+0.5){el.innerHTML='';lastC=-1;return;}
+  if(idx!==lastC){el.innerHTML=chunks[idx].map(w=>'<span class="w">'+clean(w.text)+'</span>').join('');lastC=idx;}
+  const ws=el.querySelectorAll('.w'); chunks[idx].forEach((w,j)=>{ws[j].className='w'+(t>=w.start&&t<w.end+0.06?' on':(t>=w.end?' past':''));});
+}
+window.ready=document.fonts.ready.then(()=>{measure();render(0);});
+window.render=render;
+</script>
+</body>
+</html>
